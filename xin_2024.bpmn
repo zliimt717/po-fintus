@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_13al7ip" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.11.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
+  <bpmn:process id="sub_get_antrag_sap" name="sub_get_antrag_sap" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_029g7bi</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_1mf6k73">
+      <bpmn:incoming>Flow_12cwjbd</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:scriptTask id="Activity_0l578p4" name="Payload und Response für SAP-Aufruf erstellen" camunda:asyncBefore="true" scriptFormat="Javascript">
+      <bpmn:incoming>Flow_029g7bi</bpmn:incoming>
+      <bpmn:outgoing>Flow_1g9pcr6</bpmn:outgoing>
+      <bpmn:script>/*
+ * Erstellt von:             Soeren Berz
+ * Zuletzt geändert am:      11.03.2024
+ * Inhalt:                   Payload und Response für GET_ANTRAG
+ */
+
+// Payload erstellen
+var hashMapSAPAntrag = new java.util.HashMap();
+hashMapSAPAntrag.put("project_ID", execution.getVariable("project_id"));
+hashMapSAPAntrag.put("project_sap_application_number", execution.getVariable("project_sap_application_number"));
+hashMapSAPAntrag.put("company_code", "0101");
+
+execution.setVariable("payload", hashMapSAPAntrag);
+
+// Response erstellen
+
+var response = new java.util.ArrayList();
+
+response.add("company_code");
+response.add("financial_data_financing_type");
+response.add("legal_person_community_index_number");
+response.add("legal_person_kmu");
+response.add("misc_legal_person_company_size");
+response.add("misc_object_number");
+response.add("partnernumber");
+response.add("product_funding_product_group_number");
+response.add("project_additional_number_of_jobs_female");
+response.add("project_additional_number_of_jobs_female_wage_subsidized");
+response.add("project_additional_number_of_jobs_male");
+response.add("project_additional_number_of_jobs_male_wage_subsidized");
+response.add("project_additional_number_of_jobs_teleworkplaces");
+response.add("project_additional_number_of_jobs_trainee");
+response.add("project_additional_number_of_teleworkplaces_female_wage_subsidized");
+response.add("project_additional_number_of_teleworkplaces_male_wage_subsidized");
+response.add("project_competence_field");
+response.add("project_date_of_receipt");
+response.add("project_date_of_request");
+response.add("project_eligible_equity");
+response.add("project_end_date");
+response.add("project_funding_purpose");
+response.add("project_funding_rate");
+response.add("project_ID");
+response.add("project_grant_amount");
+response.add("project_measure_type");
+response.add("project_not_eligible_equity");
+response.add("project_number_of_jobs_female");
+response.add("project_number_of_jobs_male");
+response.add("project_number_of_jobs_teleworkplaces");
+response.add("project_number_of_jobs_trainee");
+response.add("project_positive_list_grw");
+response.add("project_receipt_of_application_additions_date");
+response.add("project_sap_application_number");
+response.add("project_secured_number_of_jobs_female");
+response.add("project_secured_number_of_jobs_male");
+response.add("project_secured_number_of_jobs_teleworkplaces");
+response.add("project_secured_number_of_jobs_trainee");
+response.add("project_start_date");
+response.add("project_target_area");
+response.add("project_total_additional_high_quality_number_of_jobs_gender_related");
+response.add("project_total_additional_number_of_jobs_gender_related");
+response.add("project_total_high_quality_number_of_jobs_gender_related");
+response.add("project_total_number_of_jobs_gender_related");
+response.add("project_total_secured_high_quality_number_of_jobs_gender_related");
+response.add("project_total_secured_number_of_jobs_gender_relate");
+// Errorconfig 
+response.add("backendmethode");
+response.add("logtype");
+response.add("project_sap_application_number");
+response.add("returncode");
+response.add("startzeitpunkt");
+response.add("validation_error");
+// Kosten
+var costs_per_year = new java.util.HashMap();
+var costs_per_year_list = new java.util.ArrayList();
+costs_per_year_list.add("misc_building_acquisition");
+costs_per_year_list.add("misc_building_acquisition_eligible");
+costs_per_year_list.add("misc_compensations");
+costs_per_year_list.add("misc_construction_investment");
+costs_per_year_list.add("misc_construction_investment_eligible");
+costs_per_year_list.add("misc_costs_per_application");
+costs_per_year_list.add("misc_eligibility_planned_investment_year");
+costs_per_year_list.add("misc_incidental_costs_land_acquisition");
+costs_per_year_list.add("misc_incidental_costs_land_acquisition_eligible");
+costs_per_year_list.add("misc_intangible_assets");
+costs_per_year_list.add("misc_intangible_assets_eligible");
+costs_per_year_list.add("misc_land");
+costs_per_year_list.add("misc_land_eligible");
+costs_per_year_list.add("misc_machinery_and_equipment");
+costs_per_year_list.add("misc_machinery_and_equipment_eligible");
+costs_per_year_list.add("misc_operating_expenses");
+costs_per_year_list.add("misc_other_expenses");
+costs_per_year_list.add("misc_sale_proceeds");
+costs_per_year_list.add("misc_used_assets");
+costs_per_year_list.add("misc_used_assets_eligible");
+costs_per_year_list.add("misc_wage_costs_subsidy");
+costs_per_year_list.add("misc_wage_costs_sum");
+costs_per_year.put("costs_per_year", costs_per_year_list);
+response.add(costs_per_year);
+// Fremdfinanzierungen
+var financial_instruments = new java.util.HashMap();
+var financial_instruments_list = new java.util.ArrayList();
+financial_instruments_list.add("misc_financial_instrument");
+financial_instruments_list.add("misc_leveraged_financing_volume_eligible");
+financial_instruments_list.add("misc_leveraged_financing_volume_not_eligible");
+financial_instruments.put("financial_instruments", financial_instruments_list);
+response.add(financial_instruments);
+
+execution.setVariable("response", response);
+</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:serviceTask id="Activity_05sunjk" name="Organisationsabfrage in SAP durchführen" camunda:asyncBefore="true" camunda:class="de.skssolutions.fintus.camunda.delegate.DwpServiceDelegate">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="PARAM_DWP_APP_NAME">FINTUS_ABK_ANTRAG</camunda:inputParameter>
+          <camunda:inputParameter name="PARAM_DWP_METHOD_NAME">GET_ANTRAG</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1g9pcr6</bpmn:incoming>
+      <bpmn:outgoing>Flow_1e0etwq</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1g9pcr6" sourceRef="Activity_0l578p4" targetRef="Activity_05sunjk" />
+    <bpmn:sequenceFlow id="Flow_1e0etwq" sourceRef="Activity_05sunjk" targetRef="Activity_0ke4guf" />
+    <bpmn:sequenceFlow id="Flow_029g7bi" sourceRef="StartEvent_1" targetRef="Activity_0l578p4" />
+    <bpmn:sequenceFlow id="Flow_12cwjbd" sourceRef="Event_0h5wsjw" targetRef="Event_1mf6k73" />
+    <bpmn:intermediateCatchEvent id="Event_0h5wsjw">
+      <bpmn:incoming>Flow_0m92vzv</bpmn:incoming>
+      <bpmn:outgoing>Flow_12cwjbd</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_071cgeb">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT10M</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_0m92vzv" sourceRef="Activity_0ke4guf" targetRef="Event_0h5wsjw" />
+    <bpmn:scriptTask id="Activity_0ke4guf" name="Response-Values zu Listen hinzufügen" scriptFormat="Javascript">
+      <bpmn:incoming>Flow_1e0etwq</bpmn:incoming>
+      <bpmn:outgoing>Flow_0m92vzv</bpmn:outgoing>
+      <bpmn:script>/*
+ * Erstellt von:             Soeren Berz
+ * Zuletzt geändert am:      12.03.2024
+ * Inhalt:                   Response-Values zu Listen hinzufügen
+ */
+
+var sap_response = new java.util.HashMap();
+sap_response.put("financial_data_financing_type", execution.getVariable("financial_data_financing_type"));
+sap_response.put("legal_person_community_index_number", execution.getVariable("legal_person_community_index_number"));
+sap_response.put("legal_person_kmu", execution.getVariable("legal_person_kmu"));
+sap_response.put("misc_legal_person_company_size", execution.getVariable("misc_legal_person_company_size"));
+sap_response.put("product_funding_product_group_number", execution.getVariable("product_funding_product_group_number"));
+sap_response.put("project_additional_number_of_jobs_female", execution.getVariable("project_additional_number_of_jobs_female"));
+sap_response.put("project_additional_number_of_jobs_female_wage_subsidized", execution.getVariable("project_additional_number_of_jobs_female_wage_subsidized"));
+sap_response.put("project_additional_number_of_jobs_male", execution.getVariable("project_additional_number_of_jobs_male"));
+sap_response.put("project_additional_number_of_jobs_male_wage_subsidized", execution.getVariable("project_additional_number_of_jobs_male_wage_subsidized"));
+sap_response.put("project_additional_number_of_jobs_teleworkplaces", execution.getVariable("project_additional_number_of_jobs_teleworkplaces"));
+sap_response.put("project_additional_number_of_jobs_trainee", execution.getVariable("project_additional_number_of_jobs_trainee"));
+sap_response.put("project_additional_number_of_teleworkplaces_female_wage_subsidized", execution.getVariable("project_additional_number_of_teleworkplaces_female_wage_subsidized"));
+sap_response.put("project_additional_number_of_teleworkplaces_male_wage_subsidized", execution.getVariable("project_additional_number_of_teleworkplaces_male_wage_subsidized"));
+sap_response.put("project_competence_field", execution.getVariable("project_competence_field"));
+sap_response.put("project_date_of_receipt", execution.getVariable("project_date_of_receipt"));
+sap_response.put("project_date_of_request", execution.getVariable("project_date_of_request"));
+sap_response.put("project_eligible_equity", execution.getVariable("project_eligible_equity"));
+sap_response.put("project_end_date", execution.getVariable("project_end_date"));
+sap_response.put("project_funding_purpose", execution.getVariable("project_funding_purpose"));
+sap_response.put("project_funding_rate", execution.getVariable("project_funding_rate"));
+sap_response.put("project_grant_amount", execution.getVariable("project_grant_amount"));
+sap_response.put("project_measure_type", execution.getVariable("project_measure_type"));
+sap_response.put("project_not_eligible_equity", execution.getVariable("project_not_eligible_equity"));
+sap_response.put("project_number_of_jobs_female", execution.getVariable("project_number_of_jobs_female"));
+sap_response.put("project_number_of_jobs_male", execution.getVariable("project_number_of_jobs_male"));
+sap_response.put("project_number_of_jobs_teleworkplaces", execution.getVariable("project_number_of_jobs_teleworkplaces"));
+sap_response.put("project_number_of_jobs_trainee", execution.getVariable("project_number_of_jobs_trainee"));
+sap_response.put("project_positive_list_grw", execution.getVariable("project_positive_list_grw"));
+sap_response.put("project_receipt_of_application_additions_date", execution.getVariable("project_receipt_of_application_additions_date"));
+sap_response.put("project_secured_number_of_jobs_female", execution.getVariable("project_secured_number_of_jobs_female"));
+sap_response.put("project_secured_number_of_jobs_male", execution.getVariable("project_secured_number_of_jobs_male"));
+sap_response.put("project_secured_number_of_jobs_teleworkplaces", execution.getVariable("project_secured_number_of_jobs_teleworkplaces"));
+sap_response.put("project_secured_number_of_jobs_trainee", execution.getVariable("project_secured_number_of_jobs_trainee"));
+sap_response.put("project_start_date", execution.getVariable("project_start_date"));
+sap_response.put("project_target_area", execution.getVariable("project_target_area"));
+sap_response.put("project_total_additional_high_quality_number_of_jobs_gender_related", execution.getVariable("project_total_additional_high_quality_number_of_jobs_gender_related"));
+sap_response.put("project_total_additional_number_of_jobs_gender_related", execution.getVariable("project_total_additional_number_of_jobs_gender_related"));
+sap_response.put("project_total_high_quality_number_of_jobs_gender_related", execution.getVariable("project_total_high_quality_number_of_jobs_gender_related"));
+sap_response.put("project_total_number_of_jobs_gender_related", execution.getVariable("project_total_number_of_jobs_gender_related"));
+sap_response.put("project_total_secured_high_quality_number_of_jobs_gender_related", execution.getVariable("project_total_secured_high_quality_number_of_jobs_gender_related"));
+sap_response.put("project_total_secured_number_of_jobs_gender_relate", execution.getVariable("project_total_secured_number_of_jobs_gender_relate"));
+execution.setVariable("sap_response", sap_response);
+
+var sap_response_costs_per_year = new java.util.HashMap();
+
+var sap_response_financial_instruments = new java.util.HashMap();
+
+
+
+var listOfFinstr = new java.util.ArrayList();
+var listOfCosts = new java.util.ArrayList();
+
+var finInstr = null;
+var costMap = null;
+
+var runtime = execution.getProcessEngineServices().getRuntimeService();
+var processInstanceId = execution.getProcessInstanceId();
+var processInstanceVariables = runtime.getVariablesLocalTyped(processInstanceId);
+
+
+var amount = getAmountOfVariables();
+
+if (amount != 0) {
+    for (var i = 1; i &lt;= amount; i++) {
+        finInstr = new java.util.HashMap();
+		costMap = new java.util.HashMap();
+		
+        processInstanceVariables.forEach(function(k,v) {
+            if (k.endsWith(i.toString())&amp;&amp;(k.contains('misc_financial_instrument')||k.contains('misc_leveraged_financing_volume_eligible')||k.contains('misc_leveraged_financing_volume_not_eligible'))) {
+                finInstr.put(k,v);
+            } else if(k.endsWith(i.toString())&amp;&amp;!(k.contains('misc_financial_instrument')||k.contains('misc_leveraged_financing_volume_eligible')||k.contains('misc_leveraged_financing_volume_not_eligible'))) {
+				costMap.put(k,v);
+			}
+        });
+        listOfFinstr.add(finInstr);
+		listOfCosts.add(costMap);
+    }
+}
+
+execution.setVariable('listOfFinstr', listOfFinstr);
+execution.setVariable('listOfCosts', listOfCosts);
+
+function getAmountOfVariables() {
+    var counter1 = 0;
+	var counter2 = 0;
+    processInstanceVariables.forEach(function(k,v) {
+        if (k.contains('misc_eligibility_planned_investment_year')) {
+            counter1++;
+        } else if (k.contains('misc_financial_instrument')) {
+            counter2++;
+        }
+    });
+	if(counter1 &gt; counter2) {
+		return counter1;
+	} else {
+		return counter2;
+	}
+}</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="sub_get_antrag_sap">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="79" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1mf6k73_di" bpmnElement="Event_1mf6k73">
+        <dc:Bounds x="962" y="79" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0l578p4_di" bpmnElement="Activity_0l578p4">
+        <dc:Bounds x="350" y="57" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1sz2roi_di" bpmnElement="Activity_05sunjk" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="500" y="57" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0c1dazo_di" bpmnElement="Event_0h5wsjw">
+        <dc:Bounds x="862" y="79" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1u5zjnw_di" bpmnElement="Activity_0ke4guf">
+        <dc:Bounds x="700" y="57" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1g9pcr6_di" bpmnElement="Flow_1g9pcr6">
+        <di:waypoint x="450" y="97" />
+        <di:waypoint x="500" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1e0etwq_di" bpmnElement="Flow_1e0etwq">
+        <di:waypoint x="600" y="97" />
+        <di:waypoint x="700" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_029g7bi_di" bpmnElement="Flow_029g7bi">
+        <di:waypoint x="215" y="97" />
+        <di:waypoint x="350" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12cwjbd_di" bpmnElement="Flow_12cwjbd">
+        <di:waypoint x="898" y="97" />
+        <di:waypoint x="962" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0m92vzv_di" bpmnElement="Flow_0m92vzv">
+        <di:waypoint x="800" y="97" />
+        <di:waypoint x="862" y="97" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
